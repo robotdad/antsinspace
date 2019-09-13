@@ -1,0 +1,29 @@
+FROM python:3.7-alpine as build
+
+LABEL description="Build container for ant sorted tiny screws counting app"
+
+RUN apk update && apk add --no-cache \ 
+    autoconf build-base binutils cmake curl file gcc g++ git libgcc libtool linux-headers make musl-dev ninja tar unzip wget
+
+COPY . /src
+
+WORKDIR /src
+
+RUN make
+
+FROM python:3.7-alpine as run
+
+LABEL description="Runtime container for counting screws sorted by ants in space"
+
+RUN apk update && apk add --no-cache \ 
+    libstdc++
+
+RUN pip install redis
+
+COPY --from=build /src/antscrewcounter /usr/local/bin/antscrewcounter
+COPY --from=build /src/antworkerqueue.py /usr/local/bin/antworkerqueue.py
+COPY --from=build /src/rediswq.py /usr/local/bin/rediswq.py
+
+WORKDIR /data
+
+CMD ["sh", "-c", " python /usr/local/bin/antworkerqueue.py "]

@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: antscrewcounter
+spec:
+  parallelism: 2
+  template:
+    metadata:
+      name: antscrewcounter
+    spec:
+      containers:
+      - name: antscrewcounter
+        image: antscrewcounter/run
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: spacedata
+          mountPath: "/data"
+      volumes:
+      - name: spacedata
+        persistentVolumeClaim:
+          claimName: spaceclaim
+      restartPolicy: Never
