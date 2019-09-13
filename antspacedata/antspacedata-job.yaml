@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: antspacedata
+spec:
+  template:
+    spec:
+      containers:
+      - name: antspacedata
+        image: antspacedata/run
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: numfiles
+            value: "20"
+          - name: minlines
+            value: "10000"
+          - name: maxlines
+            value: "1000000"
+        volumeMounts:
+        - name: spacedata
+          mountPath: "/data"
+      volumes:
+      - name: spacedata
+        persistentVolumeClaim:
+          claimName: spaceclaim
+      restartPolicy: Never

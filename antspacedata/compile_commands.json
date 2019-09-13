@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/mnt/c/source/ndc/antsinspace/antspacedata/out/build/WSL-Debug",
+  "command": "/usr/bin/c++    -g -fPIE   -w -g -pedantic -O3 -msse4.2 -march=native -DNDEBUG -std=gnu++11 -o CMakeFiles/antspacedata.dir/antspacedata.cpp.o -c /mnt/c/source/ndc/antsinspace/antspacedata/antspacedata.cpp",
+  "file": "/mnt/c/source/ndc/antsinspace/antspacedata/antspacedata.cpp"
+}
+]
